@@ -425,9 +425,24 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Контакты</h4>
               <div className="space-y-2 text-gray-300">
-                <p>+7 (495) 123-45-67</p>
-                <p>info@mirinstrumenta.ru</p>
-                <p>Москва, ул. Инструментальная, 1</p>
+                <div className="flex items-start space-x-2">
+                  <Icon name="Phone" size={16} className="mt-1 flex-shrink-0" />
+                  <div>
+                    <p>+7 (3462) 22-46-06</p>
+                    <p>+7 (3462) 22-90-36</p>
+                  </div>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <Icon name="MapPin" size={16} className="mt-1 flex-shrink-0" />
+                  <p>Индустриальная ул., 25/2</p>
+                </div>
+                <div className="flex items-start space-x-2">
+                  <Icon name="Clock" size={16} className="mt-1 flex-shrink-0" />
+                  <div>
+                    <p>пн-пт: 09:00–19:00</p>
+                    <p>сб-вс: 09:00–18:00</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
