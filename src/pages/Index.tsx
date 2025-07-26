@@ -123,11 +123,12 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-tool-blue rounded-lg flex items-center justify-center">
-                <Icon name="Wrench" size={24} className="text-white" />
-              </div>
-              <h1 className="text-2xl font-bold text-tool-gray">Мир инструмента</h1>
+            <div className="flex items-center">
+              <img 
+                src="https://cdn.poehali.dev/files/84348c6c-4ee0-488e-9635-a3bad0b8e116.png" 
+                alt="Мир инструмента" 
+                className="h-12 w-auto"
+              />
             </div>
 
             {/* Navigation */}
@@ -394,11 +395,12 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div className="w-8 h-8 bg-tool-blue rounded-lg flex items-center justify-center">
-                  <Icon name="Wrench" size={20} className="text-white" />
-                </div>
-                <h3 className="text-xl font-bold">Мир инструмента</h3>
+              <div className="mb-4">
+                <img 
+                  src="https://cdn.poehali.dev/files/84348c6c-4ee0-488e-9635-a3bad0b8e116.png" 
+                  alt="Мир инструмента" 
+                  className="h-10 w-auto brightness-0 invert"
+                />
               </div>
               <p className="text-gray-300">Профессиональный инструмент для мастеров</p>
             </div>
