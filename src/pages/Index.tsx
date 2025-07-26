@@ -3,10 +3,21 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 
+interface CartItem {
+  id: number;
+  name: string;
+  price: string;
+  image: string;
+  quantity: number;
+}
+
 const Index = () => {
-  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const categories = [
     { name: 'Электроинструменты', icon: 'Zap', count: '45,230' },
@@ -26,6 +37,7 @@ const Index = () => {
       rating: 4.8,
       reviews: 245,
       badge: 'Хит продаж',
+      image: '/img/d8bf9f05-0620-4a38-af47-419436884b14.jpg',
     },
     {
       id: 2,
@@ -35,6 +47,7 @@ const Index = () => {
       rating: 4.7,
       reviews: 189,
       badge: 'Новинка',
+      image: '/img/5483ed33-9e5f-4016-b978-6d76a4a6f510.jpg',
     },
     {
       id: 3,
@@ -44,6 +57,7 @@ const Index = () => {
       rating: 4.9,
       reviews: 432,
       badge: 'Скидка',
+      image: '/img/97d0eec8-778a-4d7a-a7eb-521e5f50ef54.jpg',
     },
     {
       id: 4,
@@ -53,12 +67,54 @@ const Index = () => {
       rating: 4.6,
       reviews: 156,
       badge: null,
+      image: '/placeholder.svg',
     },
   ];
 
-  const addToCart = () => {
-    setCartCount(prev => prev + 1);
+  const addToCart = (product: typeof popularProducts[0]) => {
+    setCart(prev => {
+      const existingItem = prev.find(item => item.id === product.id);
+      if (existingItem) {
+        return prev.map(item =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: 1,
+      }];
+    });
   };
+
+  const removeFromCart = (productId: number) => {
+    setCart(prev => prev.filter(item => item.id !== productId));
+  };
+
+  const updateQuantity = (productId: number, newQuantity: number) => {
+    if (newQuantity === 0) {
+      removeFromCart(productId);
+      return;
+    }
+    setCart(prev =>
+      prev.map(item =>
+        item.id === productId
+          ? { ...item, quantity: newQuantity }
+          : item
+      )
+    );
+  };
+
+  const cartTotal = cart.reduce((total, item) => {
+    const price = parseInt(item.price.replace(',', ''));
+    return total + (price * item.quantity);
+  }, 0);
+
+  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="min-h-screen bg-white font-sans">
@@ -89,15 +145,95 @@ const Index = () => {
                 <Icon name="User" size={20} />
                 <span className="hidden md:inline ml-2">Личный кабинет</span>
               </Button>
-              <Button variant="ghost" size="sm" className="relative">
-                <Icon name="ShoppingCart" size={20} />
-                {cartCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 bg-tool-blue text-white text-xs min-w-5 h-5 flex items-center justify-center">
-                    {cartCount}
-                  </Badge>
-                )}
-                <span className="hidden md:inline ml-2">Корзина</span>
-              </Button>
+              <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="sm" className="relative">
+                    <Icon name="ShoppingCart" size={20} />
+                    {cartCount > 0 && (
+                      <Badge className="absolute -top-2 -right-2 bg-tool-blue text-white text-xs min-w-5 h-5 flex items-center justify-center">
+                        {cartCount}
+                      </Badge>
+                    )}
+                    <span className="hidden md:inline ml-2">Корзина</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-full sm:max-w-lg">
+                  <SheetHeader>
+                    <SheetTitle>Корзина ({cartCount})</SheetTitle>
+                  </SheetHeader>
+                  <div className="mt-8">
+                    {cart.length === 0 ? (
+                      <div className="text-center py-8">
+                        <Icon name="ShoppingCart" size={48} className="text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-500">Корзина пуста</p>
+                        <p className="text-sm text-gray-400 mt-2">Добавьте товары для оформления заказа</p>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="space-y-4 max-h-96 overflow-y-auto">
+                          {cart.map((item) => (
+                            <div key={item.id} className="flex items-center space-x-4 p-4 border rounded-lg">
+                              <img 
+                                src={item.image} 
+                                alt={item.name}
+                                className="w-16 h-16 object-cover rounded"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-medium text-sm">{item.name}</h4>
+                                <p className="text-tool-blue font-semibold">{item.price} ₽</p>
+                              </div>
+                              <div className="flex items-center space-x-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <Icon name="Minus" size={14} />
+                                </Button>
+                                <span className="w-8 text-center text-sm">{item.quantity}</span>
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <Icon name="Plus" size={14} />
+                                </Button>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeFromCart(item.id)}
+                                  className="h-8 w-8 p-0 text-red-500 hover:text-red-700"
+                                >
+                                  <Icon name="Trash2" size={14} />
+                                </Button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <Separator className="my-4" />
+                        <div className="space-y-4">
+                          <div className="flex justify-between items-center text-lg font-semibold">
+                            <span>Итого:</span>
+                            <span>{cartTotal.toLocaleString()} ₽</span>
+                          </div>
+                          <Button className="w-full bg-tool-blue hover:bg-blue-700" size="lg">
+                            Оформить заказ
+                          </Button>
+                          <Button 
+                            variant="outline" 
+                            className="w-full" 
+                            onClick={() => setIsCartOpen(false)}
+                          >
+                            Продолжить покупки
+                          </Button>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
@@ -212,7 +348,7 @@ const Index = () => {
                     </div>
                   </div>
                   <Button 
-                    onClick={addToCart}
+                    onClick={() => addToCart(product)}
                     className="w-full bg-tool-blue hover:bg-blue-700"
                   >
                     В корзину
