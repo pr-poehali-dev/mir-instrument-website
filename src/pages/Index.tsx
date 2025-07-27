@@ -137,7 +137,7 @@ const Index = () => {
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Каталог</a>
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Доставка</a>
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Контакты</a>
-              <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">О магазине</a>
+              <a href="#about" className="text-tool-gray hover:text-tool-blue transition-colors">О магазине</a>
             </nav>
 
             {/* Actions */}
@@ -391,7 +391,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-tool-gray text-white py-12">
+      <footer id="about" className="bg-tool-gray text-white py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
