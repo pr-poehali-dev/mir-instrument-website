@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
+import { categories } from '@/data/categories';
 
 interface CartItem {
   id: number;
@@ -19,14 +20,7 @@ const Index = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const categories = [
-    { name: 'Электроинструменты', icon: 'Zap', count: '45,230' },
-    { name: 'Ручной инструмент', icon: 'Wrench', count: '128,450' },
-    { name: 'Строительные материалы', icon: 'Building', count: '89,320' },
-    { name: 'Крепёж', icon: 'Bolt', count: '67,890' },
-    { name: 'Измерительные приборы', icon: 'Ruler', count: '23,450' },
-    { name: 'Садовый инструмент', icon: 'TreePine', count: '34,670' },
-  ];
+
 
   const popularProducts = [
     {
@@ -273,21 +267,23 @@ const Index = () => {
           <h3 className="text-3xl font-bold text-tool-gray mb-12 text-center">Популярные категории</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((category, index) => (
-              <Card key={index} className="hover:shadow-lg transition-all duration-200 cursor-pointer group border-2 border-gray-100 hover:border-tool-blue">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="w-12 h-12 bg-tool-light group-hover:bg-tool-blue rounded-lg flex items-center justify-center transition-colors">
-                      <Icon name={category.icon as any} size={24} className="text-tool-gray group-hover:text-white" />
+              <a key={index} href="/catalog">
+                <Card className="hover:shadow-lg transition-all duration-200 cursor-pointer group border-2 border-gray-100 hover:border-tool-blue">
+                  <CardContent className="p-6">
+                    <div className="flex items-center space-x-4">
+                      <div className="w-12 h-12 bg-tool-light group-hover:bg-tool-blue rounded-lg flex items-center justify-center transition-colors">
+                        <Icon name={category.icon as any} size={24} className="text-tool-gray group-hover:text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-tool-gray group-hover:text-tool-blue transition-colors">
+                          {category.name}
+                        </h4>
+                        <p className="text-gray-500 text-sm">{category.tools.length} товаров</p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-tool-gray group-hover:text-tool-blue transition-colors">
-                        {category.name}
-                      </h4>
-                      <p className="text-gray-500 text-sm">{category.count} товаров</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </a>
             ))}
           </div>
         </div>
