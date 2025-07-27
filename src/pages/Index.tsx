@@ -402,10 +402,15 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-4">Каталог</h4>
               <div className="space-y-2 text-gray-300">
-                <p>Электроинструменты</p>
-                <p>Ручной инструмент</p>
-                <p>Строительные материалы</p>
-                <p>Измерительные приборы</p>
+                {categories.map((category, index) => (
+                  <a 
+                    key={index} 
+                    href="/catalog" 
+                    className="block hover:text-white transition-colors cursor-pointer"
+                  >
+                    {category.name}
+                  </a>
+                ))}
               </div>
             </div>
             <div>
