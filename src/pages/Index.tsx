@@ -134,7 +134,7 @@ const Index = () => {
             {/* Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Главная</a>
-              <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Каталог</a>
+              <a href="/catalog" className="text-tool-gray hover:text-tool-blue transition-colors">Каталог</a>
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Доставка</a>
               <a href="#about" className="text-tool-gray hover:text-tool-blue transition-colors">О магазине</a>
             </nav>
