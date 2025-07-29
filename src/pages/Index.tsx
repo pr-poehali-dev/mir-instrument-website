@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
+import AuthModal from '@/components/AuthModal';
 
 interface CartItem {
   id: number;
@@ -19,6 +20,7 @@ interface CartItem {
 const Index = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
 
 
@@ -135,7 +137,11 @@ const Index = () => {
 
             {/* Actions */}
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setIsAuthModalOpen(true)}
+              >
                 <Icon name="User" size={20} />
                 <span className="hidden md:inline ml-2">Личный кабинет</span>
               </Button>
@@ -451,6 +457,12 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </div>
   );
 };

@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
+import AuthModal from '@/components/AuthModal';
 
 export default function Catalog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
@@ -32,6 +34,18 @@ export default function Catalog() {
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Доставка</a>
               <a href="/#about" className="text-tool-gray hover:text-tool-blue transition-colors">О магазине</a>
             </nav>
+            
+            {/* Actions */}
+            <div className="flex items-center space-x-4">
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => setIsAuthModalOpen(true)}
+              >
+                <Icon name="User" size={20} />
+                <span className="hidden md:inline ml-2">Личный кабинет</span>
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -182,6 +196,12 @@ export default function Catalog() {
           </div>
         </div>
       </footer>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+      />
     </div>
   );
 }
