@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,7 @@ interface CartItem {
 }
 
 const Index = () => {
+  const navigate = useNavigate();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -371,8 +373,11 @@ const Index = () => {
           <h3 className="text-3xl font-bold text-tool-gray mb-12 text-center">Популярные товары</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {popularProducts.map((product) => (
-              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 bg-white">
-                <div className="aspect-square bg-gray-100 relative overflow-hidden">
+              <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 bg-white cursor-pointer">
+                <div 
+                  className="aspect-square bg-gray-100 relative overflow-hidden"
+                  onClick={() => navigate(`/product/${product.id}`)}
+                >
                   {product.badge && (
                     <Badge 
                       className={`absolute top-3 left-3 z-10 ${
@@ -395,7 +400,10 @@ const Index = () => {
                   />
                 </div>
                 <CardContent className="p-4">
-                  <h4 className="font-semibold text-tool-gray mb-2 line-clamp-2 h-12">
+                  <h4 
+                    className="font-semibold text-tool-gray mb-2 line-clamp-2 h-12 cursor-pointer hover:text-tool-blue transition-colors"
+                    onClick={() => navigate(`/product/${product.id}`)}
+                  >
                     {product.name}
                   </h4>
                   <div className="flex items-center space-x-1 mb-3">
