@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
 import AuthModal from '@/components/AuthModal';
@@ -8,9 +9,47 @@ import AuthModal from '@/components/AuthModal';
 export default function Catalog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showSearchResults, setShowSearchResults] = useState(false);
+
+  // Создаем плоский список всех товаров для поиска
+  const allTools = useMemo(() => {
+    return categories.flatMap(category => 
+      category.tools.map(tool => ({
+        name: tool,
+        category: category.name,
+        categoryId: category.id,
+        icon: category.icon
+      }))
+    );
+  }, []);
+
+  // Фильтруем товары по поисковому запросу
+  const searchResults = useMemo(() => {
+    if (!searchTerm || searchTerm.length < 2) return [];
+    
+    return allTools.filter(tool =>
+      tool.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      tool.category.toLowerCase().includes(searchTerm.toLowerCase())
+    ).slice(0, 8); // Показываем только первые 8 результатов
+  }, [searchTerm, allTools]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    setShowSearchResults(value.length >= 2);
+  };
+
+  const handleSelectSearchResult = (tool: any) => {
+    setSelectedCategory(tool.categoryId);
+    setSearchTerm('');
+    setShowSearchResults(false);
+  };
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
+    setSearchTerm('');
+    setShowSearchResults(false);
   };
 
   const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
@@ -56,7 +95,44 @@ export default function Catalog() {
             {/* Categories View */}
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-tool-gray mb-4">Каталог товаров</h1>
-              <p className="text-gray-600">Выберите категорию для просмотра ассортимента</p>
+              <p className="text-gray-600 mb-6">Выберите категорию для просмотра ассортимента</p>
+              
+              {/* Search Bar */}
+              <div className="relative max-w-md">
+                <div className="relative">
+                  <Icon name="Search" size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder="Поиск товаров..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="pl-10 pr-4 py-2"
+                    onFocus={() => searchTerm.length >= 2 && setShowSearchResults(true)}
+                    onBlur={() => setTimeout(() => setShowSearchResults(false), 150)}
+                  />
+                </div>
+                
+                {/* Search Results Dropdown */}
+                {showSearchResults && searchResults.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 max-h-80 overflow-y-auto z-50">
+                    {searchResults.map((tool, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        onClick={() => handleSelectSearchResult(tool)}
+                      >
+                        <div className="w-8 h-8 bg-tool-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Icon name={tool.icon as any} size={16} className="text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-tool-gray">{tool.name}</h4>
+                          <p className="text-sm text-gray-500">{tool.category}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -98,7 +174,7 @@ export default function Catalog() {
                 Назад к категориям
               </Button>
               
-              <div className="flex items-center space-x-4 mb-4">
+              <div className="flex items-center space-x-4 mb-6">
                 <div className="w-16 h-16 bg-tool-blue rounded-lg flex items-center justify-center">
                   <Icon name={selectedCategoryData?.icon as any} size={32} className="text-white" />
                 </div>
@@ -106,6 +182,43 @@ export default function Catalog() {
                   <h1 className="text-3xl font-bold text-tool-gray">{selectedCategoryData?.name}</h1>
                   <p className="text-gray-600">{selectedCategoryData?.description}</p>
                 </div>
+              </div>
+
+              {/* Search in Category */}
+              <div className="relative max-w-md mb-6">
+                <div className="relative">
+                  <Icon name="Search" size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <Input
+                    type="text"
+                    placeholder="Поиск в категории..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    className="pl-10 pr-4 py-2"
+                    onFocus={() => searchTerm.length >= 2 && setShowSearchResults(true)}
+                    onBlur={() => setTimeout(() => setShowSearchResults(false), 150)}
+                  />
+                </div>
+                
+                {/* Search Results Dropdown for Category */}
+                {showSearchResults && searchResults.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 max-h-80 overflow-y-auto z-50">
+                    {searchResults.map((tool, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center space-x-3 px-4 py-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0"
+                        onClick={() => handleSelectSearchResult(tool)}
+                      >
+                        <div className="w-8 h-8 bg-tool-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                          <Icon name={tool.icon as any} size={16} className="text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-medium text-tool-gray">{tool.name}</h4>
+                          <p className="text-sm text-gray-500">{tool.category}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
