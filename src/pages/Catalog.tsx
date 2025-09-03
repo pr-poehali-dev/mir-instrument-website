@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -11,6 +11,15 @@ export default function Catalog() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
+
+  // Проверяем URL параметры при загрузке
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryFromUrl = urlParams.get('category');
+    if (categoryFromUrl && categories.find(cat => cat.id === categoryFromUrl)) {
+      setSelectedCategory(categoryFromUrl);
+    }
+  }, []);
 
   // Создаем плоский список всех товаров для поиска
   const allTools = useMemo(() => {
