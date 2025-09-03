@@ -95,7 +95,7 @@ const AboutModal = ({ isOpen, onClose }: AboutModalProps) => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-tool-gray mb-1">Быстрая доставка</h4>
-                  <p className="text-sm text-gray-600">Доставка по Москве за 1 день, по России за 2-5 дней</p>
+                  <p className="text-sm text-gray-600">Доставка по Сургуту за 1 день, по России за 2-5 дней</p>
                 </div>
               </div>
 

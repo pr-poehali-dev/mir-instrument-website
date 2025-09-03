@@ -465,7 +465,7 @@ const Index = () => {
                 <Icon name="Truck" size={32} className="text-white" />
               </div>
               <h4 className="text-xl font-semibold text-tool-gray mb-2">Быстрая доставка</h4>
-              <p className="text-gray-600">Доставим по Москве за 1 день, по России за 2-5 дней</p>
+              <p className="text-gray-600">Доставим по Сургуту за 1 день, по России за 2-5 дней</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-tool-blue rounded-full flex items-center justify-center mx-auto mb-4">
