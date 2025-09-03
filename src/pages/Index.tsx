@@ -97,12 +97,12 @@ const Index = () => {
     {
       id: 4,
       name: 'Перфоратор DeWALT D25263K',
-      price: '18,990',
+      price: '50,000',
       oldPrice: null,
       rating: 4.6,
       reviews: 156,
       badge: null,
-      image: '/placeholder.svg',
+      image: 'https://cdn.poehali.dev/files/de53c7a5-2f2b-4b79-b551-8c5b2973c5bf.png',
     },
   ];
 
@@ -406,10 +406,10 @@ const Index = () => {
                   )}
                   <img 
                     src={
-                      product.id === 1 ? '/img/d8bf9f05-0620-4a38-af47-419436884b14.jpg' :
-                      product.id === 2 ? '/img/5483ed33-9e5f-4016-b978-6d76a4a6f510.jpg' :
-                      product.id === 3 ? '/img/97d0eec8-778a-4d7a-a7eb-521e5f50ef54.jpg' :
-                      '/placeholder.svg'
+                      product.id === 1 ? 'https://cdn.poehali.dev/files/3b20f03f-7167-4c9e-aa43-ff159b3d8ab0.png' :
+                      product.id === 2 ? 'https://cdn.poehali.dev/files/92b49adc-abed-4f59-9a70-bb3708346eb0.png' :
+                      product.id === 3 ? 'https://cdn.poehali.dev/files/88edef3d-943a-4f42-b740-5ffdec0e004b.png' :
+                      'https://cdn.poehali.dev/files/de53c7a5-2f2b-4b79-b551-8c5b2973c5bf.png'
                     }
                     alt={product.name}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
