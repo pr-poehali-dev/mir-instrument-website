@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
 import AuthModal from '@/components/AuthModal';
+import AboutModal from '@/components/AboutModal';
 
 interface CartItem {
   id: number;
@@ -21,6 +22,7 @@ const Index = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -167,7 +169,12 @@ const Index = () => {
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Главная</a>
               <a href="/catalog" className="text-tool-gray hover:text-tool-blue transition-colors">Каталог</a>
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Доставка</a>
-              <a href="#about" className="text-tool-gray hover:text-tool-blue transition-colors">О магазине</a>
+              <button 
+                onClick={() => setIsAboutModalOpen(true)}
+                className="text-tool-gray hover:text-tool-blue transition-colors"
+              >
+                О магазине
+              </button>
             </nav>
 
             {/* Actions */}
@@ -525,6 +532,12 @@ const Index = () => {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
+      />
+
+      {/* About Modal */}
+      <AboutModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
       />
     </div>
   );

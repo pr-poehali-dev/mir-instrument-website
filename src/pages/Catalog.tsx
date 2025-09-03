@@ -5,10 +5,12 @@ import { Input } from '@/components/ui/input';
 import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
 import AuthModal from '@/components/AuthModal';
+import AboutModal from '@/components/AboutModal';
 
 export default function Catalog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -80,7 +82,12 @@ export default function Catalog() {
               <a href="/" className="text-tool-gray hover:text-tool-blue transition-colors">Главная</a>
               <a href="/catalog" className="text-tool-blue font-medium">Каталог</a>
               <a href="#" className="text-tool-gray hover:text-tool-blue transition-colors">Доставка</a>
-              <a href="/#about" className="text-tool-gray hover:text-tool-blue transition-colors">О магазине</a>
+              <button 
+                onClick={() => setIsAboutModalOpen(true)}
+                className="text-tool-gray hover:text-tool-blue transition-colors"
+              >
+                О магазине
+              </button>
             </nav>
             
             {/* Actions */}
@@ -323,6 +330,12 @@ export default function Catalog() {
       <AuthModal
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
+      />
+
+      {/* About Modal */}
+      <AboutModal
+        isOpen={isAboutModalOpen}
+        onClose={() => setIsAboutModalOpen(false)}
       />
     </div>
   );
