@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/co
 import { Separator } from '@/components/ui/separator';
 import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
+import SupportChat from '@/components/SupportChat';
 import AuthModal from '@/components/AuthModal';
 import AboutModal from '@/components/AboutModal';
 
@@ -563,6 +564,9 @@ const Index = () => {
         isOpen={isAboutModalOpen}
         onClose={() => setIsAboutModalOpen(false)}
       />
+
+      {/* Support Chat */}
+      <SupportChat />
     </div>
   );
 };
