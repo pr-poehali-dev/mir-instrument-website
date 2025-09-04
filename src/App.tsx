@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Catalog from "./pages/Catalog";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
+import SupportChat from "./components/SupportChat";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,9 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        
+        {/* Global Support Chat */}
+        <SupportChat />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
