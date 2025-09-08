@@ -18,7 +18,7 @@ const CategoriesSection = () => {
               onClick={() => navigate(`/catalog?category=${category.id}`)}
               className="cursor-pointer"
             >
-              <Card className="hover:shadow-lg transition-all duration-200 group border-2 border-gray-100 hover:border-tool-blue">
+              <Card className="card-hover group border-2 border-gray-100 hover:border-tool-blue">
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-tool-light group-hover:bg-tool-blue rounded-lg flex items-center justify-center transition-colors">

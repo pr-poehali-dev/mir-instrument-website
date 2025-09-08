@@ -29,7 +29,7 @@ const PopularProductsSection = ({ products, onAddToCart }: PopularProductsSectio
         <h3 className="text-3xl font-bold text-tool-gray mb-12 text-center">Популярные товары</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <Card key={product.id} className="overflow-hidden hover:shadow-lg transition-all duration-200 bg-white cursor-pointer">
+            <Card key={product.id} className="overflow-hidden card-hover bg-white cursor-pointer">
               <div 
                 className="aspect-square bg-gray-100 relative overflow-hidden"
                 onClick={() => navigate(`/product/${product.id}`)}

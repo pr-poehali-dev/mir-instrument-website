@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AuthModal from '@/components/AuthModal';
 import AboutModal from '@/components/AboutModal';
+import PageTransition from '@/components/PageTransition';
 import HomeHeader from '@/components/home/HomeHeader';
 import HeroSection from '@/components/home/HeroSection';
 import CategoriesSection from '@/components/home/CategoriesSection';
@@ -110,48 +111,50 @@ const Index = () => {
   const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="min-h-screen bg-white font-sans">
-      {/* Header */}
-      <HomeHeader
-        cart={cart}
-        cartCount={cartCount}
-        cartTotal={cartTotal}
-        onAuthModalOpen={() => setIsAuthModalOpen(true)}
-        onAboutModalOpen={() => setIsAboutModalOpen(true)}
-        onUpdateQuantity={updateQuantity}
-        onRemoveFromCart={removeFromCart}
-      />
+    <PageTransition>
+      <div className="min-h-screen bg-white font-sans">
+        {/* Header */}
+        <HomeHeader
+          cart={cart}
+          cartCount={cartCount}
+          cartTotal={cartTotal}
+          onAuthModalOpen={() => setIsAuthModalOpen(true)}
+          onAboutModalOpen={() => setIsAboutModalOpen(true)}
+          onUpdateQuantity={updateQuantity}
+          onRemoveFromCart={removeFromCart}
+        />
 
-      {/* Hero Section */}
-      <HeroSection />
+        {/* Hero Section */}
+        <HeroSection />
 
-      {/* Categories */}
-      <CategoriesSection />
+        {/* Categories */}
+        <CategoriesSection />
 
-      {/* Popular Products */}
-      <PopularProductsSection 
-        products={popularProducts}
-        onAddToCart={addToCart}
-      />
+        {/* Popular Products */}
+        <PopularProductsSection 
+          products={popularProducts}
+          onAddToCart={addToCart}
+        />
 
-      {/* Features */}
-      <FeaturesSection />
+        {/* Features */}
+        <FeaturesSection />
 
-      {/* Footer */}
-      <HomeFooter />
+        {/* Footer */}
+        <HomeFooter />
 
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-      />
+        {/* Auth Modal */}
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
+        />
 
-      {/* About Modal */}
-      <AboutModal
-        isOpen={isAboutModalOpen}
-        onClose={() => setIsAboutModalOpen(false)}
-      />
-    </div>
+        {/* About Modal */}
+        <AboutModal
+          isOpen={isAboutModalOpen}
+          onClose={() => setIsAboutModalOpen(false)}
+        />
+      </div>
+    </PageTransition>
   );
 };
 

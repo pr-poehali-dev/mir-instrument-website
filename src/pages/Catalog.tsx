@@ -6,6 +6,7 @@ import Icon from '@/components/ui/icon';
 import { categories } from '@/data/categories';
 import AuthModal from '@/components/AuthModal';
 import AboutModal from '@/components/AboutModal';
+import PageTransition from '@/components/PageTransition';
 
 export default function Catalog() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -66,7 +67,8 @@ export default function Catalog() {
   const selectedCategoryData = categories.find(cat => cat.id === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <PageTransition>
+      <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -337,6 +339,7 @@ export default function Catalog() {
         isOpen={isAboutModalOpen}
         onClose={() => setIsAboutModalOpen(false)}
       />
-    </div>
+      </div>
+    </PageTransition>
   );
 }

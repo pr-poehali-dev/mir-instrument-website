@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AuthModal from '@/components/AuthModal';
 import AboutModal from '@/components/AboutModal';
+import PageTransition from '@/components/PageTransition';
 import ProductHeader from '@/components/product/ProductHeader';
 import ProductBreadcrumbs from '@/components/product/ProductBreadcrumbs';
 import ProductImageGallery from '@/components/product/ProductImageGallery';
@@ -204,7 +205,8 @@ const Product = () => {
   const images = [product.image, product.image, product.image]; // В реальности разные фото
 
   return (
-    <div className="min-h-screen bg-white">
+    <PageTransition>
+      <div className="min-h-screen bg-white">
       {/* Header */}
       <ProductHeader
         onAuthModalOpen={() => setIsAuthModalOpen(true)}
@@ -251,7 +253,8 @@ const Product = () => {
         isOpen={isAboutModalOpen}
         onClose={() => setIsAboutModalOpen(false)}
       />
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 
