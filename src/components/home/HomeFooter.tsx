@@ -22,7 +22,7 @@ const HomeFooter = () => {
               {categories.map((category, index) => (
                 <a 
                   key={index} 
-                  href="/catalog" 
+                  href={`/catalog?category=${category.id}`} 
                   className="block hover:text-white transition-colors cursor-pointer"
                 >
                   {category.name}
